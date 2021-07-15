@@ -1,41 +1,25 @@
 '''
-Stencil demo
-============
+Canvas stress
+=============
 
-This is a test of the stencil graphics instruction inside the stencil view
-widget. When you use a stencil, nothing will be drawn outside the bounding
-box. All the graphics will draw only in the stencil view.
+This example tests the performance of our Graphics engine by drawing large
+numbers of small squares. You should see a black canvas with buttons and a
+label at the bottom. Pressing the buttons adds small colored squares to the
+canvas.
 
-You can "draw" a stencil view by touch & draw. The touch down will set the
-position, and the drag will set the size.
 '''
 
-from kivy.app import App
-from kivy.core.window import Window
-from kivy.graphics import Color, Rectangle
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from kivy.uix.label import Label
-from kivy.uix.stencilview import StencilView
+from kivy.uix.boxlayout import BoxLayout
+from kivy.app import App
+from kivy.graphics import Color, Rectangle
 from random import random as r
 from functools import partial
 
 
-
-class StencilTestWidget(StencilView):
-    '''Drag to define stencil area
-    '''
-
-    def on_touch_down(self, touch):
-        self.pos = touch.pos
-        self.size = (1, 1)
-
-    def on_touch_move(self, touch):
-        self.size = (touch.x - touch.ox, touch.y - touch.oy)
-
-
-class StencilCanvasApp(App):
+class StressCanvasApp(App):
 
     def add_rects(self, label, wid, count, *largs):
         label.text = str(int(label.text) + count)
@@ -43,44 +27,46 @@ class StencilCanvasApp(App):
             for x in range(count):
                 Color(r(), 1, 1, mode='hsv')
                 Rectangle(pos=(r() * wid.width + wid.x,
-                               r() * wid.height + wid.y), size=(10, 10))
+                               r() * wid.height + wid.y), size=(20, 20))
 
-    def reset_stencil(self, wid, *largs):
-        wid.pos = (0, 0)
-        wid.size = Window.size
+    def double_rects(self, label, wid, *largs):
+        count = int(label.text)
+        self.add_rects(label, wid, count, *largs)
 
     def reset_rects(self, label, wid, *largs):
         label.text = '0'
         wid.canvas.clear()
 
     def build(self):
-        wid = StencilTestWidget(size_hint=(None, None), size=Window.size)
+        wid = Widget()
 
         label = Label(text='0')
 
-        btn_add500 = Button(text='+ 200 rects')
-        btn_add500.bind(on_press=partial(self.add_rects, label, wid, 200))
+        btn_add100 = Button(text='+ 100 rects',
+                            on_press=partial(self.add_rects, label, wid, 100))
 
-        btn_reset = Button(text='Reset Rectangles')
-        btn_reset.bind(on_press=partial(self.reset_rects, label, wid))
+        btn_add500 = Button(text='+ 500 rects',
+                            on_press=partial(self.add_rects, label, wid, 500))
 
-        btn_stencil = Button(text='Reset Stencil')
-        btn_stencil.bind(on_press=partial(self.reset_stencil, wid))
+        btn_double = Button(text='x 2',
+                            on_press=partial(self.double_rects, label, wid))
+
+        btn_reset = Button(text='Reset',
+                           on_press=partial(self.reset_rects, label, wid))
 
         layout = BoxLayout(size_hint=(1, None), height=50)
+        layout.add_widget(btn_add100)
         layout.add_widget(btn_add500)
+        layout.add_widget(btn_double)
         layout.add_widget(btn_reset)
-        layout.add_widget(btn_stencil)
         layout.add_widget(label)
 
         root = BoxLayout(orientation='vertical')
-        rfl = FloatLayout()
-        rfl.add_widget(wid)
-        root.add_widget(rfl)
+        root.add_widget(wid)
         root.add_widget(layout)
 
         return root
 
 
 if __name__ == '__main__':
-    StencilCanvasApp().run()
+    StressCanvasApp().run()
