@@ -22,6 +22,7 @@ from random import random as r
 from functools import partial
 
 
+
 class StencilTestWidget(StencilView):
     '''Drag to define stencil area
     '''
