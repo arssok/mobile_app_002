@@ -1,72 +1,48 @@
-'''
-Canvas stress
-=============
-
-This example tests the performance of our Graphics engine by drawing large
-numbers of small squares. You should see a black canvas with buttons and a
-label at the bottom. Pressing the buttons adds small colored squares to the
-canvas.
-
-'''
-
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
 from kivy.app import App
-from kivy.graphics import Color, Rectangle
-from random import random as r
-from functools import partial
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
 
 
-class StressCanvasApp(App):
-
-    def add_rects(self, label, wid, count, *largs):
-        label.text = str(int(label.text) + count)
-        with wid.canvas:
-            for x in range(count):
-                Color(r(), 1, 1, mode='hsv')
-                Rectangle(pos=(r() * wid.width + wid.x,
-                               r() * wid.height + wid.y), size=(20, 20))
-
-    def double_rects(self, label, wid, *largs):
-        count = int(label.text)
-        self.add_rects(label, wid, count, *largs)
-
-    def reset_rects(self, label, wid, *largs):
-        label.text = '0'
-        wid.canvas.clear()
-
+class MainApp(App):
     def build(self):
-        wid = Widget()
+        main_layout = BoxLayout(orientation="vertical", padding=10, spacing=10)
+        self.solution = TextInput(multiline=False, readonly=False, halign="right", font_size=55)
+        main_layout.add_widget(self.solution)
+        buttons = [
+            ["7", "8", "9", "/"],
+            ["4", "5", "6", "*"],
+            ["1", "2", "3", "-"],
+            [".", "0", "C", "+"],
+        ]
+        for row in buttons:
+            h_layout = BoxLayout()
+            for label in row:
+                button = Button(text=label, pos_hint={"center_x": 0.5, "center_y": 0.5})
+                button.bind(on_press=self.on_button_press)
+                h_layout.add_widget(button)
+            main_layout.add_widget(h_layout)
 
-        label = Label(text='0')
+        equals_button = Button(text="=", pos_hint={"center_x": 0.5, "center_y": 0.5})
+        equals_button.bind(on_press=self.on_solution)
+        main_layout.add_widget(equals_button)
 
-        btn_add100 = Button(text='+ 100 rects',
-                            on_press=partial(self.add_rects, label, wid, 100))
+        # return a Button() as a root widget
+        return main_layout
 
-        btn_add500 = Button(text='+ 500 rects',
-                            on_press=partial(self.add_rects, label, wid, 500))
+    def on_button_press(self, instance):
+        if instance.text == "C":
+            self.solution.text = ""
+        else:
+            self.solution.text += instance.text
 
-        btn_double = Button(text='x 2',
-                            on_press=partial(self.double_rects, label, wid))
-
-        btn_reset = Button(text='Reset',
-                           on_press=partial(self.reset_rects, label, wid))
-
-        layout = BoxLayout(size_hint=(1, None), height=50)
-        layout.add_widget(btn_add100)
-        layout.add_widget(btn_add500)
-        layout.add_widget(btn_double)
-        layout.add_widget(btn_reset)
-        layout.add_widget(label)
-
-        root = BoxLayout(orientation='vertical')
-        root.add_widget(wid)
-        root.add_widget(layout)
-
-        return root
+    def on_solution(self, instance):
+        if self.solution.text:
+            try:
+                self.solution.text = str(eval(self.solution.text))
+            except:
+                self.solution.text = "Error"
 
 
 if __name__ == '__main__':
-    StressCanvasApp().run()
+    MainApp().run()

@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Mobile App 001
+title = Mobile App 002
 
 # (str) Package name
-package.name = mobileapp001
+package.name = mobileapp002
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.wiseplat
+package.domain = org.arssok
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -28,7 +28,7 @@ source.dir = .
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.3
+version = 0.4
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
