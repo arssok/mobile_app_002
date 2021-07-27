@@ -40,7 +40,7 @@ class GameApp(App):
 
         win = False
         color = [0, 1, 0, 1]
-        color1 =[.99, .64, .90, 1]
+        color1 =[.99, .3, .90, 1]
 
         for index in range(8):
             if vector[index].count('X') == 3:
@@ -281,8 +281,8 @@ class GameApp(App):
         self.button = [0 for _ in range(9)]
         for index in range(9):
             self.button[index] = Button(text='',
-#                                        color=[.0, .0, .0, 1],
-                                        font_size=35,
+                                        disabled_color=[0, 0, 1, 1],
+                                        font_size=90,
                                         disabled=False,
 #                                        background_normal='atlas: // data / images / defaulttheme / player-background',
                                         background_color=[0.0,0.5,0.5,1],
@@ -293,8 +293,8 @@ class GameApp(App):
             grid.add_widget(self.button[index])
 
         lbls = BoxLayout(orientation="horizontal", size_hint=(1, .11))
-        self.a = Label(text="0", size_hint=(1, 0.9), font_size=27, color = [0, 1, 0, 1] )
-        self.b = Label(text="0", size_hint=(1, 0.9), font_size=27, color = [.99, .64, .90, 1])
+        self.a = Label(text="0", size_hint=(1, 0.9), font_size=40, color = [0, 1, 0, 1] )
+        self.b = Label(text="0", size_hint=(1, 0.9), font_size=40, color = [.99, .3, .90, 1])
         lbls.add_widget(self.a)
         lbls.add_widget(self.b)
 
