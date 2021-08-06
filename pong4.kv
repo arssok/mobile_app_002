@@ -78,23 +78,10 @@
 
     Button:
         size: root.width * 1/4,root.height*1/10
-        text: "Новая Игра"
-        center_x: root.width * 3 / 4
+        text: "Вперёд"
+        center_x: root.width / 2
         center_y:0+ 0.7*self.height
         font_size: 1/2*self.height
         color: 1,1,1,1
         background_color:0,0.5,1,1
         on_press: app.on_press_button()
-
-    Button:
-        size: root.width * 1/4,root.height*1/10
-        text: app.message
-        center_x: root.width * 1 / 4
-        center_y:0+ 0.7*self.height
-        font_size: 1/2*self.height
-        color: 1,1,1,1
-        background_color:0,0.5,1,1
-        on_press: app.level_ping()
-
-
-

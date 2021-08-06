@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = Pin Pong
+title = Ping Pong
 
 # (str) Package name
 package.name = mobileapp003
@@ -28,7 +28,7 @@ source.dir = .
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.9
+version = 0.10
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]

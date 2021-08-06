@@ -15,7 +15,6 @@ sound.play()
 
 nn=0
 kk=30
-mm=[]
 
 class PongPaddle(Widget):
     score = NumericProperty(0) ## очки игрока
@@ -44,7 +43,6 @@ class PongPaddle1(Widget):
             ball.velocity = vel.x, vel.y + offset
             sound = SoundLoader.load('music/beep5.wav')
             sound.play()
-            print(vel.x,vel.y)
 
 
 class PongBall(Widget):
@@ -129,7 +127,6 @@ class Pong4App(App):
         game = PongGame()
         # game.serve_ball()
         # Clock.schedule_interval(game.update, 1.0 / 60.0)# 60 FPS
-        self.message = "Темп 50"
         return game
 
     def on_press_button(self):
@@ -145,17 +142,6 @@ class Pong4App(App):
         self.ball.velocity = vel
         return game
 
-    # Изменить уровень
-    def level_ping(self):
-        global kk, message
-        if kk == 30:
-            kk = 60
-            self.message = "Темп 100!"
-        elif kk == 60:
-            kk = 30
-            self.message = "Темп 50"
-
-        return kk
 
 if __name__ == '__main__':
     Pong4App().run()
