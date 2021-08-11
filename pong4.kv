@@ -10,20 +10,20 @@
             size: self.size
 
 <PongPaddle>:
-    size: 25, 200
+    size: 50, 200
     canvas:
         Color:
             rgba:1,0,0,1
-        Rectangle:
+        Ellipse:
             pos: self.pos
             size: self.size
 
 <PongPaddle1>
-    size: 25, 200
+    size: 50, 200
     canvas:
         Color:
             rgba:1,1,0,1
-        Rectangle:
+        Ellipse:
             pos: self.pos
             size: self.size
 
@@ -68,20 +68,31 @@
 
     PongPaddle:
         id: player_left
-        x: root.x
+        x: root.x - 25
         center_y: root.center_y
 
     PongPaddle1:
         id: player_right
-        x: root.width - self.width
+        x: root.width - 25
         center_y: root.center_y
 
     Button:
         size: root.width * 1/4,root.height*1/10
         text: "Вперёд"
-        center_x: root.width / 2
+        center_x: root.width / 4
         center_y:0+ 0.7*self.height
         font_size: 1/2*self.height
         color: 1,1,1,1
         background_color:0,0.5,1,1
         on_press: app.on_press_button()
+
+    Button:
+        size: root.width * 0.25,root.height*0.1
+        text: app.message
+        center_x: root.width * 3 / 4
+        center_y: 0.7*self.height
+        font_size: 0.5*self.height
+        color: 1,1,1,1
+        background_color:0,0.5,1,1
+        on_press: app.level_ping()
+

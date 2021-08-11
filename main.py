@@ -14,7 +14,7 @@ sound = SoundLoader.load('music/beep0.wav')
 sound.play()
 
 nn=0
-kk=30
+kk=1
 
 class PongPaddle(Widget):
     score = NumericProperty(0) ## очки игрока
@@ -77,6 +77,12 @@ class PongGame(Widget):
         # отскок шарика по оси Y
         if (self.ball.y < self.y) or (self.ball.top > self.top):
             self.ball.velocity_y *= -1
+        # Перемещение ракетки компьютера при игре с ИИ
+        if kk==2:
+            if self.ball.x < 0.6*self.width:
+                self.player2.center_y =self.ball.y
+            elif self.ball.x >= 0.6 and self.ball.x < 0.9 :
+                self.player2.center_y = self.ball.y + randint(0, 50)*randint(-1,1)
 
         # отскок шарика по оси X
         # тут если шарик смог уйти за панельку игрока, то есть игрок не успел отбить шарик
@@ -114,10 +120,11 @@ class PongGame(Widget):
         # первый игрок может касаться только своей части экрана (левой)
         if touch.x < self.width / 7:
             self.player1.center_y = touch.y
-
         # второй игрок может касаться только своей части экрана (правой)
-        if touch.x > self.width - self.width / 7:
-            self.player2.center_y = touch.y
+        if kk==1:
+           if touch.x > self.width - self.width / 7:
+               self.player2.center_y = touch.y
+
 
 class Pong4App(App):
     message = StringProperty()
@@ -127,13 +134,14 @@ class Pong4App(App):
         game = PongGame()
         # game.serve_ball()
         # Clock.schedule_interval(game.update, 1.0 / 60.0)# 60 FPS
+        self.message = "С игроком"
         return game
 
     def on_press_button(self):
         global game, nn, mm
         nn=1
         game.serve_ball()
-        Clock.schedule_interval(game.update, 1.0 / kk)# 60 FPS
+        Clock.schedule_interval(game.update, 1.0 / 30)# 60 FPS
         return game
 
     def stop_ping(self):
@@ -141,6 +149,17 @@ class Pong4App(App):
         self.ball.center = self.center
         self.ball.velocity = vel
         return game
+
+# Изменить уровень
+    def level_ping(self):
+        global kk, message
+        if kk == 2:
+            self.message = "С игроком"
+            kk = 1
+        elif kk == 1:
+            self.message = "С ИИ"
+            kk = 2
+        return kk
 
 
 if __name__ == '__main__':

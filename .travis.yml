@@ -29,7 +29,7 @@ install:
   - ls -la
   - ls bin/ -l
   - gem install dpl --pre
-  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp003-0.10-armeabi-v7a-debug.apk" --tag_name "v.0.10"
+  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp003-0.11-armeabi-v7a-debug.apk" --tag_name "v.0.11"
   - echo "TODO COMPILE 64bit"
   - ls -l /home/travis/
   - ls -l /home/travis/build/arssok/mobile_app_002/
@@ -46,5 +46,5 @@ install:
   - ls bin/ -l
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp003-0.10-arm64-v8a-debug.apk" --tag_name "v.0.10"
+  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp003-0.11-arm64-v8a-debug.apk" --tag_name "v.0.11"
   - echo "OK"
