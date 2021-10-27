@@ -24,11 +24,11 @@ install:
   - export PATH=$PATH:~/.local/bin/
   - ls -la
   - echo "TODO COMPILE 32bit"
-  - yes | buildozer android debug
+  - yes | travis_wait 20 buildozer android debug
   - ls -la
   - ls bin/ -l
   - echo "TODO"
   - gem install dpl --pre
-  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp006-1.0-armeabi-v7a-debug.apk" --tag_name "v.1.0"
+  - dpl releases --token $GITHUB_TOKEN --file "bin/mobileapp006-1.1-armeabi-v7a-debug.apk" --tag_name "v.1.1"
 script:
   - echo "OK"
